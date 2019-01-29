@@ -15,4 +15,8 @@
 
 
 if __name__ == '__main__':
-    pass
+    res = 0
+    for i in range(1, 100):
+        for j in range(1, 100):
+            res = max(res, sum([int(x) for x in str(i ** j)]))
+    print(res)
