@@ -12,19 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-from utils import get_all_prime
+import codecs
+
+
+def get_ord_sum(x):
+    return sum([ord(c) for c in x])
 
 
 if __name__ == '__main__':
-    primes = set(get_all_prime(1000000000))
-    pre_cnt = 8
-    for i in range(9, 100000, 2):
-        tem_cnt = 0
-        for j in range(4):
-            if i * i - j * (i - 1) in primes:
-                tem_cnt += 1
-        if (pre_cnt + tem_cnt) / (2 * i - 1) < 0.1:
-            print(i)
-            break
-        pre_cnt += tem_cnt
-        print(i, pre_cnt)
+    with codecs.open('p059_cipher.txt', 'r', encoding='utf-8') as fin:
+        line = [int(x) for idx, x in enumerate(fin.read().strip().split(','))]
+        num_cnt = {x: line.count(x) for x in line}
+        print(sorted(num_cnt.items(), key=lambda x: x[1]))
+        key = 'god'
+        res = ''
+        for idx, x in enumerate(line):
+            res += chr(ord(key[idx % 3]) ^ x)
+        print(res)
+        print(get_ord_sum(res))
