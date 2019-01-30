@@ -96,3 +96,29 @@ def quick_pow_mod(x, y, mod):
         x = (x * x) % mod
         y = y >> 1
     return res
+
+
+def is_square(x):
+    if x < 1:
+        return False
+    tem = int(math.sqrt(x))
+    return tem * tem == x
+
+
+def get_continued_fractions(x):
+    """
+    continued fractions.
+    :param x: x
+    :return: if x is square return, else continued fractions
+    """
+    if is_square(x):
+        return
+    int_part = int(math.sqrt(x))
+    up_part = 1
+    bias_part = -int_part
+    while True:
+        int_part = int(up_part * (math.sqrt(x) - bias_part) / (x - bias_part * bias_part))
+        up_part_tem = x - bias_part * bias_part
+        up_part = up_part_tem // gcd(up_part_tem, up_part)
+        bias_part = -bias_part - int_part * up_part
+        yield int_part
