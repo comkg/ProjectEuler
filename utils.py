@@ -127,3 +127,18 @@ def get_continued_fractions(x):
 
 def permutations(pool):
     return itertools.permutations(pool)
+
+
+def euler_func(x):
+    res = x
+    i = 2
+    while i * i <= x:
+        if x % i == 0:
+            x //= i
+            res = res - res // i
+        while x % i == 0:
+            x //= i
+        i += 1
+    if x > 0:
+        res = res - res // x
+    return res
