@@ -13,6 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 import math
+import itertools
 
 
 def get_divisor_sum(x):
@@ -122,3 +123,7 @@ def get_continued_fractions(x):
         up_part = up_part_tem // gcd(up_part_tem, up_part)
         bias_part = -bias_part - int_part * up_part
         yield int_part
+
+
+def permutations(pool):
+    return itertools.permutations(pool)
