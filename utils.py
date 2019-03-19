@@ -139,6 +139,6 @@ def euler_func(x):
         while x % i == 0:
             x //= i
         i += 1
-    if x > 0:
+    if x > 1:
         res = res - res // x
     return res
