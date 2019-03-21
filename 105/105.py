@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+import codecs
 
 
 def is_rule_1(numbers):
@@ -34,25 +35,11 @@ def is_rule_2(numbers):
     return True
 
 
-res = 1e11
-res_str = None
-
-
-def find(numbers, target):
-    if len(numbers) == target:
-        if is_rule_1(numbers) and is_rule_2(numbers):
-            global res, res_str
-            if sum(numbers) < res:
-                res = sum(numbers)
-                res_str = ' '.join([str(x) for x in numbers])
-                print(res, res_str)
-        return
-    for i in range(numbers[-1] + 1, sum(numbers[:2]) if len(numbers) > 1 else 2 * numbers[-1] + 1):
-        numbers.append(i)
-        find(numbers, target)
-        numbers.pop()
-
-
 if __name__ == '__main__':
-    find([20], 7)
-    # print(res, res_str)
+    with codecs.open('p105_sets.txt', 'r', encoding='utf-8') as fin:
+        res = 0
+        for line in fin:
+            numbers = sorted([int(x) for x in line.strip().split(',')])
+            if is_rule_1(numbers) and is_rule_2(numbers):
+                res += sum(numbers)
+        print(res)
