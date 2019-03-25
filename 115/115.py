@@ -14,25 +14,6 @@
 # ==============================================================================
 
 
-res = {}
-
-
-def find(n, m):
-    cnt = 1
-    if m > n:
-        return cnt
-    if n in res:
-        return res[n]
-    for pos in range(n - m + 1):
-        for block_len in range(m, n - pos + 1):
-            cnt += find(n - pos - block_len - 1, m)
-    res[n] = cnt
-    return res[n]
-
-
 if __name__ == '__main__':
-    i = 50
-    while find(i, 50) <= 1000000:
-        print(i)
-        i += 1
-
+    # same as 114
+    pass
