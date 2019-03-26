@@ -14,6 +14,7 @@
 # ==============================================================================
 import math
 import itertools
+from tqdm import tqdm
 
 
 def get_divisor_sum(x):
@@ -66,7 +67,7 @@ def get_all_prime(n):
     """
     res = []
     prime = [True for _ in range(n)]
-    for i in range(2, n):
+    for i in tqdm(range(2, n)):
         if prime[i]:
             res.append(i)
             for j in range(i + i, n, i):
