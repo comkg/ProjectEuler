@@ -14,6 +14,7 @@
 # ==============================================================================
 import math
 import itertools
+import random
 from tqdm import tqdm
 
 
@@ -143,3 +144,20 @@ def euler_func(x):
     if x > 1:
         res = res - res // x
     return res
+
+
+def miller_rabin(n):
+    if n == 1:
+        return False
+    d = n - 1
+    i = random.randint(1, n-1)
+    while d != 1:
+        if quick_pow_mod(i, d, n) == 1:
+            if d % 2 != 0:
+                return True
+            d = d // 2
+            if quick_pow_mod(i, d, n) == n - 1:
+                return True
+        else:
+            return False
+    return True
