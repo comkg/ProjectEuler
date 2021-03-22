@@ -13,13 +13,14 @@
 # limitations under the License.
 # ==============================================================================
 import math
+from tqdm import tqdm
 
 from utils import is_square
 
 
 def fac_square_sum(n):
     res = 0
-    for i in range(1, int(math.sqrt(n + 1))):
+    for i in range(1, int(math.sqrt(n)) + 1):
         if n % i == 0:
             res += i * i
             if i * i != n:
@@ -27,13 +28,48 @@ def fac_square_sum(n):
     return res
 
 
-def main():
-    n = 1000000
+def prime_split(n, res):
     for i in range(1, n):
-        if is_square(fac_square_sum(i)):
+        res[i] = []
+    for i in tqdm(range(2, n)):
+        if len(res[i]) == 0:
+            for j in range(i, n, i):
+                tem = 0
+                tem_j = j
+                while tem_j % i == 0:
+                    tem += 1
+                    tem_j //= i
+                res[j].append((i, tem))
+    return res
+
+
+def calc_square_sum(item):
+    res = 1
+    for x in item:
+        tem = 1
+        cur_p = x[0] * x[0]
+        for j in range(x[1]):
+            tem += cur_p
+            cur_p = cur_p * x[0] * x[0]
+        res *= tem
+    return res
+
+
+def main():
+    n = 64000000
+    prime_res = prime_split(n, {})
+    # print(prime_res)
+    res = 1
+    for i in tqdm(range(2, n)):
+        if is_square(calc_square_sum(prime_res[i])):
             print(i)
+            res += i
+        # if is_square(fac_square_sum(i)):
+        #     print(i, "true")
+    print(res)
 
 
 if __name__ == '__main__':
-    # print(fac_square_sum(10))
+    # print(fac_square_sum(42))
     main()
+    # print(calc_square_sum([(2, 1), (5, 1)]))
