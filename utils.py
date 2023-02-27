@@ -18,6 +18,9 @@ import random
 from tqdm import tqdm
 
 
+fibonacci_cache = {}
+
+
 def get_divisor_sum(x):
     """
     get the divisor sum.
@@ -161,3 +164,21 @@ def miller_rabin(n):
         else:
             return False
     return True
+
+
+def fibonacci(n, mod):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    global fibonacci_cache
+    if n in fibonacci_cache:
+        return fibonacci_cache[n]
+    f_n = fibonacci((n + 1) // 2, mod)
+    f_n_1 = fibonacci((n + 1) // 2 - 1, mod)
+    if n & 1:
+        res = ((f_n * f_n) + (f_n_1 * f_n_1)) % mod
+    else:
+        res = f_n * (2 * f_n_1 + f_n) % mod
+    fibonacci_cache[n] = res
+    return res
